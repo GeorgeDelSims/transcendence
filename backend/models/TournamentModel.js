@@ -1,6 +1,6 @@
 export default class Tournament {
     constructor(fastify) {
-        this.logger = fastify.logger;
+        this.log = fastify.log;
         this.db = fastify.db;
     }
 
@@ -11,7 +11,7 @@ export default class Tournament {
         `);
         const result = sqlStatement.run(name, created_by);
         const id = result.lastInsertRowId;
-        this.logger.info(`Tournament created with ID ${ id }`);
+        this.log.info(`Tournament created with ID ${ id }`);
         return { id, name };
     }
 

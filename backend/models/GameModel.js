@@ -1,6 +1,6 @@
 export default class Game {
     constructor(fastify) {
-        this.logger = fastify.logger;
+        this.log = fastify.log;
         this.db = fastify.db;
     }
     
@@ -10,7 +10,7 @@ export default class Game {
         VALUES (?, ?, ?, ?)
       `);
       const result = sqlStatement.run(player1_id, player2_id, 0, 0);
-      this.logger.info(`Game created with ID ${result.lastInsertRowid}`);
+      this.log.info(`Game created with ID ${result.lastInsertRowid}`);
       return { id: result.lastInsertRowid };
     }
   
@@ -21,7 +21,7 @@ export default class Game {
         WHERE id = ?
       `);
       sqlStatement.run(winnerId, player1_score, player2_score, gameId);
-      this.logger.info(`Game ${gameId} finished`);
+      this.log.info(`Game ${gameId} finished`);
     }
   
     getGameById(id) {
