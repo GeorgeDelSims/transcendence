@@ -30,6 +30,8 @@ you're actually asking the browser to render a different component or html view 
 
 export function initRouter() {
   const handleRoute = () => {
+    // window is a JS global variable that represents the browser's API
+    // window.location is the URL object 
     const path = window.location.hash.replace("#", "") || "";
     const render = routes[path];
     if (render) render();
