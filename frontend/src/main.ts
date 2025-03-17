@@ -1,4 +1,4 @@
-import { initRouter } from "./router.ts";
+import { initRouter } from "./router.js";
 
 window.addEventListener("DOMContentLoaded", () => {
   initRouter();

@@ -1,3 +1,15 @@
-FROM nginx
-COPY ./placeholder.html /usr/share/nginx/html/index.html
-EXPOSE 80
+FROM node:18 
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+# copy frontend source code 
+COPY . .
+
+# create /app/dist (compiled code) inside frontend container image
+RUN npm run build
+
+# ❗ This line ensures Docker keeps this stage as the final one
+CMD ["echo", "Build complete."]

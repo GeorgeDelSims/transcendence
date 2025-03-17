@@ -1,7 +1,7 @@
-import { renderLogin } from "./views/loginView";
-import { renderRegister } from "./views/registerView";
-import { setupLoginController } from "./controllers/loginController";
-import { setupRegisterController } from "./controllers/registerController";
+import { renderLogin } from "./views/loginView.js";
+// import { renderRegister } from "./views/registerView";
+import { setupLoginController } from "./controllers/LoginController.js";
+// import { setupRegisterController } from "./controllers/RegisterController";
 
 
 // Routes object (like map or dict) with <"string" keytype; "void arrow function" valuetype> 
@@ -12,10 +12,10 @@ const routes: Record<string, () => void> = {
     renderLogin();
     setupLoginController();
   },
-  "/register": () => {
-    renderRegister();
-    setupRegisterController();
-  },
+  // "/register": () => {
+  //   renderRegister();
+  //   setupRegisterController();
+  // },
   "": () => {
     window.location.hash = "#/login"; 
   }
@@ -30,12 +30,17 @@ you're actually asking the browser to render a different component or html view 
 
 export function initRouter() {
   const handleRoute = () => {
-    // window is a JS global variable that represents the browser's API
+    // window is a JS global variable provided by the browser that represents the its API
     // window.location is the URL object 
+    // The frontend files are getting rendered in the browser's environment,
+    // so the browser is the one that supplies the variables for its API. 
     const path = window.location.hash.replace("#", "") || "";
     const render = routes[path];
-    if (render) render();
-    else window.location.hash = "#/login";
+    if (render) {
+      render();
+    } else {
+      window.location.hash = "#/login";
+    }
   };
 
   window.addEventListener("hashchange", handleRoute);
