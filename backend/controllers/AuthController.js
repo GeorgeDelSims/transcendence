@@ -28,7 +28,7 @@ class AuthController {
     const { username, password } = request.body;
     const user = this.authModel.getUserByUsername(username);
     if (!user) {
-      return reply.code(400).send({ message: "User doesn't exist" });
+      return reply.code(400).send({ message: "User doesn't exist" });setNotFoundHandler
     }
     const isPasswordValid = await this.fastify.bcrypt.compare(password, user.password);
     if (!isPasswordValid) {

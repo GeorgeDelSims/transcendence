@@ -1,8 +1,6 @@
 import { renderLogin } from "./views/loginView.js";
-// import { renderRegister } from "./views/registerView";
-import { setupLoginController } from "./controllers/LoginController.js";
-// import { setupRegisterController } from "./controllers/RegisterController";
-
+import { LoginModel } from "./models/LoginModel.js";
+import { LoginController } from "./controllers/LoginController.js";
 
 // Routes object (like map or dict) with <"string" keytype; "void arrow function" valuetype> 
 // the key is the uri, the value is the arrow function that calls the valid controller
@@ -10,14 +8,16 @@ import { setupLoginController } from "./controllers/LoginController.js";
 const routes: Record<string, () => void> = {
   "/login": () => {
     renderLogin();
-    setupLoginController();
+    const model = new LoginModel();
+    const controller = new LoginController(model);
+    controller.setup();
   },
   // "/register": () => {
   //   renderRegister();
   //   setupRegisterController();
   // },
   "": () => {
-    window.location.hash = "#/login"; 
+    window.location.hash = "#/"; 
   }
 };
 

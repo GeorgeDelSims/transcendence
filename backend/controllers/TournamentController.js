@@ -9,7 +9,7 @@ class TournamentController {
     createTournament = async (request, reply) => {
         const { name } = request.body;
         const userId = request.user?.id;
-      
+    
         if (!name) {
             return reply.code(400).send({ error: 'Missing tournament name' });
         }
@@ -19,11 +19,11 @@ class TournamentController {
         }
 
         try {
-          const tournament = this.tournamentModel.createTournament(name, userId);
-          reply.code(201).send(tournament);
+            const tournament = this.tournamentModel.createTournament(name, userId);
+            reply.code(201).send(tournament);
         } catch (err) {
-          this.fastify.log.error(err);
-          reply.code(500).send({ error: 'Could not create tournament' });
+            this.fastify.log.error(err);
+            reply.code(500).send({ error: 'Could not create tournament' });
         }
     }
 }

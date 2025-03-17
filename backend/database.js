@@ -15,11 +15,11 @@ async function databasePlugin(fastify, options) {
     // create User table:
     db.prepare(`
         CREATE TABLE IF NOT EXISTS users (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          username TEXT UNIQUE NOT NULL,
-          password TEXT NOT NULL
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
         )
-      `).run();
+    `).run();
     
     // Create Game table:
     db.prepare(`
