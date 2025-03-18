@@ -1,23 +1,34 @@
 import { renderLogin } from "./views/loginView.js";
 import { LoginModel } from "./models/LoginModel.js";
 import { LoginController } from "./controllers/LoginController.js";
+import { RegisterModel } from "./models/RegisterModel.js";
+import { RegisterController } from "./controllers/RegisterController.js";
+import { renderRegister } from "./views/registerView.js";
 
 // Routes object (like map or dict) with <"string" keytype; "void arrow function" valuetype> 
 // the key is the uri, the value is the arrow function that calls the valid controller
 
 const routes: Record<string, () => void> = {
+  "/": () => {
+    renderLogin();
+    const model = new LoginModel();
+    const controller = new LoginController(model);
+    console.log("setting up login controller");
+    controller.setup();
+  },
   "/login": () => {
     renderLogin();
     const model = new LoginModel();
     const controller = new LoginController(model);
+    console.log("setting up login controller");
     controller.setup();
   },
-  // "/register": () => {
-  //   renderRegister();
-  //   setupRegisterController();
-  // },
-  "": () => {
-    window.location.hash = "#/"; 
+  "/register": () => {
+    renderRegister(); // call view function 
+    const model = new RegisterModel(); // create model 
+    const controller = new RegisterController(model); // create controller
+    console.log("setting up registration controller");
+    controller.setup();
   }
 };
 
@@ -39,7 +50,8 @@ export function initRouter() {
     if (render) {
       render();
     } else {
-      window.location.hash = "#/login";
+      console.warn(`Unknown route: "${path}". Redirecting to /`);
+      window.location.hash = "#/";
     }
   };
 

@@ -18,18 +18,18 @@ export class LoginController {
     private async handleSubmit(event: Event): Promise<void> {
         event.preventDefault(); // prevents browser's default behaviour of reloading page 
 
-        const emailInput = document.getElementById("email") as HTMLInputElement;
+        const usernameInput = document.getElementById("username") as HTMLInputElement;
         const passwordInput = document.getElementById("password") as HTMLInputElement;
-        const email = emailInput?.value.trim();
+        const username = usernameInput?.value.trim();
         const password = passwordInput?.value;
 
-        if (!email || !password) {
+        if (!username || !password) {
             alert("Please fill in all fields.");
             return;
         }
 
         try {
-            const data = await this.model.login(email, password);
+            const data = await this.model.login(username, password);
             alert("Login successful");
             window.location.hash = "#/";
         } catch (error) {

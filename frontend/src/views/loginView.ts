@@ -1,14 +1,16 @@
 export function renderLogin(): void {
     const app = document.getElementById("app");
-    if (!app) return;
+    if (!app) {
+        return;
+    }
 
     app.innerHTML = `
     <section class="login-section">
         <h2>Login</h2>
         <form id="login-form">
         <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required />
+            <label for="username">Username:</label>
+            <input type="username" id="username" name="username" required />
         </div>
         <div>
             <label for="password">Password:</label>

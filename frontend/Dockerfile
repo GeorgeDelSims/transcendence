@@ -9,7 +9,6 @@ RUN npm install
 COPY . .
 
 # create /app/dist (compiled code) inside frontend container image
-RUN npm run build
+RUN npm run clean && npm run build
 
-# ❗ This line ensures Docker keeps this stage as the final one
 CMD ["echo", "Build complete."]

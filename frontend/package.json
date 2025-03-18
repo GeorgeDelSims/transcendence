@@ -6,6 +6,7 @@
         "build:ts": "tsc",
         "build:css": "postcss src/styles.css -o dist/styles.css",
         "build": "npm run build:ts && npm run build:css && cp index.html dist/",
+        "clean": "rm -rf dist && rm -rf build",
         "watch:ts": "tsc --watch",
         "watch:css": "postcss src/styles.css -o dist/styles.css --watch"
     },
