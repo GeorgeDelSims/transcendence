@@ -1,60 +1,40 @@
-import { renderLogin } from "./views/loginView.js";
-import { LoginModel } from "./models/LoginModel.js";
-import { LoginController } from "./controllers/LoginController.js";
-import { RegisterModel } from "./models/RegisterModel.js";
-import { RegisterController } from "./controllers/RegisterController.js";
-import { renderRegister } from "./views/registerView.js";
+import { LoginComponent } from "./components/Login.js";
+import { RegisterComponent } from "./components/Register.js";
+import { HomeComponent } from "./components/Home.js";
 
-// Routes object (like map or dict) with <"string" keytype; "void arrow function" valuetype> 
-// the key is the uri, the value is the arrow function that calls the valid controller
 
-const routes: Record<string, () => void> = {
-  "/": () => {
-    renderLogin();
-    const model = new LoginModel();
-    const controller = new LoginController(model);
-    console.log("setting up login controller");
-    controller.setup();
-  },
-  "/login": () => {
-    renderLogin();
-    const model = new LoginModel();
-    const controller = new LoginController(model);
-    console.log("setting up login controller");
-    controller.setup();
-  },
-  "/register": () => {
-    renderRegister(); // call view function 
-    const model = new RegisterModel(); // create model 
-    const controller = new RegisterController(model); // create controller
-    console.log("setting up registration controller");
-    controller.setup();
-  }
+// Route Map: (Record is the typescript equivalent of a Dictionary)
+// Keys = strings // values = functions that take HTMLElement and return void (i.e. Components)
+const routes: Record<string, (root: HTMLElement) => void> = {
+  "/": HomeComponent,
+  "/login": LoginComponent,
+  "/register": RegisterComponent,
 };
 
-/*
-Hash changes don't reload the page, which is why they are used in Single Page Applications (SPAs).
-A hash url can look like this : http://localhost/#/login 
-When you add an event listener for the hash change, 
-you're actually asking the browser to render a different component or html view without reloading the page. 
-*/
+// Initialise the router (optional parameter rootId has a default value of "app")
+export function initRouter(rootId = "app") {
+  // get the root DOM element
+  const root = document.getElementById(rootId);
+  
+  if (!root) {
+    throw new Error(`Root element #${rootId} not found`);
+  }
 
-export function initRouter() {
-  const handleRoute = () => {
-    // window is a JS global variable provided by the browser that represents the its API
-    // window.location is the URL object 
-    // The frontend files are getting rendered in the browser's environment,
-    // so the browser is the one that supplies the variables for its API. 
-    const path = window.location.hash.replace("#", "") || "";
-    const render = routes[path];
-    if (render) {
-      render();
+  const render = () => {
+    // get the url and remove the hash
+    const path = window.location.hash.replace("#", "") || "/";
+    // match the url to the root map and run the corresponding function 
+    const component = routes[path];
+    if (component) {
+      component(root);
     } else {
-      console.warn(`Unknown route: "${path}". Redirecting to /`);
-      window.location.hash = "#/";
+      // change to using a 404 object later? 
+      root.innerHTML = `<h2>404 - Not Found</h2>`;
     }
   };
 
-  window.addEventListener("hashchange", handleRoute);
-  handleRoute();
+  // add an event listener to the window (so the url bar at the top of the browser) at the beginning of the program
+  window.addEventListener("hashchange", render);
+  // also run a render() first thing 
+  render();
 }
