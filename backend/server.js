@@ -14,10 +14,8 @@ import { fileURLToPath } from 'url'
 
 import Fastify from 'fastify'
 import databasePlugin from './database.js'
-import firstRoute from './routes/indexRoute.js'
-import usersRoutes from './routes/userRoutes.js'
+import indexRoute from './routes/indexRoute.js'
 import authRoutes from './routes/authRoutes.js'
-import gameRoutes from './routes/gameRoutes.js'
 import fastifyJwt from '@fastify/jwt'
 import fastifyBcrypt from 'fastify-bcrypt'
 import fastifyCookie from '@fastify/cookie'
@@ -37,10 +35,8 @@ fastify.register(fastifyStatic, {
 });
 
 fastify.register(databasePlugin);
-fastify.register(firstRoute);
-fastify.register(usersRoutes);
+fastify.register(indexRoute);
 fastify.register(authRoutes);
-fastify.register(gameRoutes);
 fastify.register(fastifyJwt, { secret: "secret_key" }); // Check this out
 fastify.register(fastifyBcrypt);
 fastify.register(fastifyCookie);

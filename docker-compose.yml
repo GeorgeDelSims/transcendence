@@ -13,7 +13,7 @@ services:
       - "3000:3000"
     volumes:
       - frontend-dist:/app/frontend/dist
-      - db-data:/database
+      - ./database:/database #bind mount for the moment as easier to access with dbeaver 
 
 volumes:
   frontend-dist:
