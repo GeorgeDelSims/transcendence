@@ -1,3 +1,41 @@
+import Fastify from 'fastify';
+import registerRoutes from './src/infrastructure/web/fastify/index.js';
+import cookie from '@fastify/cookie';
+import jwt from '@fastify/jwt';
+
+const fastify = Fastify();
+
+fastify.register(cookie);
+fastify.register(jwt, { secret: 'supersecret' });
+
+// import shared utils, services, and repositories to the Fastify instance
+import hashUtils from './src/shared/utils/hash.js';
+import SQLiteUserRepository from './src/infrastructure/db/SQLiteUserRepository.js';
+import AuthService from './src/domain/auth/services/AuthService.js';
+import RegisterUser from './src/application/auth/RegisterUser.js';
+import LoginUser from './src/application/auth/LoginUser.js';
+
+// Add plugins to the fastify instance with decorate 
+fastify.decorate('UserRepository', SQLiteUserRepository);
+fastify.decorate('AuthService', AuthService);
+fastify.decorate('RegisterUser', RegisterUser);
+fastify.decorate('LoginUser', LoginUser);
+fastify.decorate('hashUtils', hashUtils);
+
+// Register routes
+await registerRoutes(fastify);
+
+fastify.listen({ port: 3000, host: '0.0.0.0' }, function (error, address) {
+  if (error) {
+    fastify.log.error(error)
+    process.exit(1)
+  }
+  console.log(`server running at ${address}`)
+})
+
+
+
+
 /*
 Dependencies for the docker:
   npm install fastify @fastify/jwt fastify-bcrypt @fastify/cookie better-sqlite3
@@ -5,26 +43,25 @@ Dependencies for the docker:
 test installation versions:
   npm list --depth=0
 
-*/
+  
+  // Plugin imports (files are in the node_modules directory)
+  import fastifyStatic from '@fastify/static'
+  import path from 'path'
+  import { fileURLToPath } from 'url'
 
-// Plugin imports (files are in the node_modules directory)
-import fastifyStatic from '@fastify/static'
-import path from 'path'
-import { fileURLToPath } from 'url'
-
-import Fastify from 'fastify'
-import databasePlugin from './database.js'
-import indexRoute from './routes/indexRoute.js'
-import authRoutes from './routes/authRoutes.js'
-import fastifyJwt from '@fastify/jwt'
-import fastifyBcrypt from 'fastify-bcrypt'
-import fastifyCookie from '@fastify/cookie'
-import AuthMiddleware from './middleware/AuthMiddleware.js'
-
-const   fastify = Fastify({ logger: true })
-
-// setup for serving static files:
-const __filename = fileURLToPath(import.meta.url);
+  import Fastify from 'fastify'
+  import databasePlugin from './database.js'
+  import indexRoute from './routes/indexRoute.js'
+  import authRoutes from './routes/authRoutes.js'
+  import fastifyJwt from '@fastify/jwt'
+  import fastifyBcrypt from 'fastify-bcrypt'
+  import fastifyCookie from '@fastify/cookie'
+  import AuthMiddleware from './middleware/AuthMiddleware.js'
+  
+  const   fastify = Fastify({ logger: true })
+  
+  // setup for serving static files:
+  const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // register frontend static file serving from the root "/"
@@ -57,10 +94,12 @@ fastify.setNotFoundHandler((request, reply) => {
 });
 
 // Run server:
-fastify.listen({ port: 3000, host: '0.0.0.0' }, function (err, address) {
-  if (err) {
-    fastify.log.error(err)
+fastify.listen({ port: 3000, host: '0.0.0.0' }, function (error, address) {
+  if (error) {
+    fastify.log.error(error)
     process.exit(1)
   }
   console.log(`server running at ${address}`)
 })
+
+*/

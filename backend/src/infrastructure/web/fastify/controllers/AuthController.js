@@ -1,4 +1,50 @@
-import Auth from '../models/AuthModel.js';
+// infrastructure Layer: The controller uses the classes from the Application Layer
+
+class AuthController {
+  constructor({ registerUser, loginUser }) {
+      this.registerUser = registerUser;
+      this.loginUser = loginUser;
+
+      this.register = this.register.bind(this);
+      this.login = this.login.bind(this);
+      this.logout = this.logout.bind(this);
+  }
+
+  async register(request, reply) {
+      try {
+          const { username, password } = request.body;
+          await this.registerUser.execute(username, password);
+          reply.send({ message: "Registered successfully" });
+      } catch (err) {
+          reply.code(400).send({ message: err.message });
+      }
+  }
+
+  async login(request, reply) {
+      try {
+          const { username, password } = request.body;
+          const token = await this.loginUser.execute(username, password);
+          reply.setCookie("token", token, {
+              httpOnly: true,
+              secure: true,
+              sameSite: "Strict",
+              path: "/"
+          }).send({ message: "Login successful" });
+      } catch (err) {
+          reply.code(400).send({ message: err.message });
+      }
+  }
+
+  logout(request, reply) {
+      reply.clearCookie("token", { path: "/" }).send({ message: "Logged out" });
+  }
+}
+
+export default AuthController;
+
+
+/*
+import Auth from '../../../../../models/AuthModel.js';
 
 class AuthController {
   constructor(fastify) {
@@ -9,7 +55,7 @@ class AuthController {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
-
+  
 
   async register(request, reply) {
     const { username, password } = request.body;
@@ -21,8 +67,8 @@ class AuthController {
     this.authModel.createUser(username, hashedPassword);
     reply.send({ message: "User registered successfully" });
   }
-
-
+  
+  
   async login(request, reply) {
     // extract username and password from the request object (body)
     const { username, password } = request.body;
@@ -45,11 +91,13 @@ class AuthController {
       path: "/"
     }).send({ message: "Login successful" });
   }
-
-
+  
+  
   logout(request, reply) {
     reply.clearCookie("token", { path: "/" }).send({ message: "Logged out successfully" });
   }
 }
 
 export default AuthController;
+
+*/
