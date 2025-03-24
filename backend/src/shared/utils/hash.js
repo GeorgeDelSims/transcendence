@@ -14,6 +14,7 @@ class BcryptPasswordHasher {
         return this.bcrypt.hash(password, 10);
     }
 
+    // Method to be used for login (compare given password with saved hashed one)
     compare(password, hashed) {
         return this.bcrypt.compare(password, hashed);
     }

@@ -1,29 +1,40 @@
 import Fastify from 'fastify';
-import registerRoutes from './src/infrastructure/web/fastify/index.js';
+import registerRoutes from './src/index/index.js';
 import cookie from '@fastify/cookie';
 import jwt from '@fastify/jwt';
+import databasePlugin from './database.js';
+import fastifyBcrypt from 'fastify-bcrypt';
 
-const fastify = Fastify();
+const fastify = Fastify({ logger: true });
 
 fastify.register(cookie);
 fastify.register(jwt, { secret: 'supersecret' });
 
-// import shared utils, services, and repositories to the Fastify instance
-import hashUtils from './src/shared/utils/hash.js';
-import SQLiteUserRepository from './src/infrastructure/db/SQLiteUserRepository.js';
-import AuthService from './src/domain/auth/services/AuthService.js';
-import RegisterUser from './src/application/auth/RegisterUser.js';
-import LoginUser from './src/application/auth/LoginUser.js';
+await fastify.register(databasePlugin);
+await fastify.register(fastifyBcrypt);
 
-// Add plugins to the fastify instance with decorate 
-fastify.decorate('UserRepository', SQLiteUserRepository);
-fastify.decorate('AuthService', AuthService);
-fastify.decorate('RegisterUser', RegisterUser);
-fastify.decorate('LoginUser', LoginUser);
-fastify.decorate('hashUtils', hashUtils);
+// import shared utils, services, and repositories to the Fastify instance
+import BcryptPasswordHasher from './src/shared/utils/hash.js';
+import PlayerRepositorySQLite from './src/auth/infrastructure/PlayerRepositorySQLite.js';
+import PlayerRegister from './src/auth/application/PlayerRegister.js';
+
+// Create real instances
+const passwordHasher = new BcryptPasswordHasher(fastify.bcrypt);
+const playerRepository = new PlayerRepositorySQLite(fastify.db);
+const playerRegister = new PlayerRegister(playerRepository, fastify.jwt, passwordHasher);
+
+// Decorate with actual instances
+fastify.decorate('playerRepository', playerRepository);
+fastify.decorate('playerRegister', playerRegister);
+fastify.decorate('bcryptPasswordHasher', passwordHasher);
 
 // Register routes
-await registerRoutes(fastify);
+try {
+  await registerRoutes(fastify);
+} catch (error) {
+  console.error('Error in registerRoutes:', error);
+  process.exit(1);
+}
 
 fastify.listen({ port: 3000, host: '0.0.0.0' }, function (error, address) {
   if (error) {
