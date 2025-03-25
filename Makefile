@@ -14,6 +14,9 @@ help:
 dev-up: 
 	docker compose --profile dev up --build
 
+dev-up-no-cache: 
+	docker compose --profile dev up --no-cache --build
+
 dev-down:
 	docker compose down
 
@@ -31,10 +34,13 @@ prod-down:
 prod-re: prod-down 
 	docker compose --profile prod up --build
 
-#utils: 
+#utils:
 
 logs:
 	docker compose logs -f
 
 clean-all:
 	docker compose down -v --remove-orphans
+
+
+.PHONY: dev-up-no-cache, dev-up, dev-down, dev-re

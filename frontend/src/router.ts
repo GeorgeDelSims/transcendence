@@ -38,3 +38,6 @@ export function initRouter(rootId = "app") {
   // also run a render() first thing 
   render();
 }
+ window.addEventListener("popstate", (event) => { event.preventDefault();
+
+  })

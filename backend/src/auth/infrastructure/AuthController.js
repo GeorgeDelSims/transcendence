@@ -18,17 +18,26 @@ class AuthController {
       const token = await this.playerRegister.execute(username, password); 
   
       response.send({ message: "Registered successfully", token });
-    } catch (err) {
-      this.logger.error("Registration failed:", err.message);
-      console.error("Registration failed:", err);
-      response.code(400).send({ message: err.message });
+    } catch (error) {
+      this.logger.error("Registration failed:", error.message);
+      console.error("Registration failed:", error);
+      response.code(400).send({ message: error.message });
     }
   }  
 }
 
 export default AuthController;
 
-  // async login(request, response) {
+
+/*
+CAreful about sending error messages to the frontend, 
+it can be a security breach if a hacker wants to get information about the website
+*/
+
+
+
+
+// async login(request, response) {
   //     try {
   //         const { username, password } = request.body;
   //         const token = await this.PlayerAccountLogin.execute(username, password);
@@ -38,8 +47,8 @@ export default AuthController;
   //             sameSite: "Strict",
   //             path: "/"
   //         }).send({ message: "Login successful" });
-  //     } catch (err) {
-  //         response.code(400).send({ message: err.message });
+  //     } catch (error) {
+  //         response.code(400).send({ message: error.message });
   //     }
   // }
 
@@ -65,7 +74,7 @@ export default AuthController;
             // verify the JWT from the request 
             request.user = this.fastify.jwt.verify(token);
 
-        } catch (err) {
+        } catch (error) {
             return reply.code(401).send({ message: "Unauthorised: Invalid token."});
         }
     }

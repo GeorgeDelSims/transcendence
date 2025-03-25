@@ -9,6 +9,10 @@ export function LoginComponent(root: HTMLElement) {
         <button type="submit">Login</button>
     </form>`;
 
+    // const form1 = document.createElement("form");
+    //  const text = document.createElement("textarea");
+    //  form1.appendChild(text);
+
     // access form element in DOM and add listener for the "submit" event
     const form = document.getElementById("login-form") as HTMLFormElement;
     form.addEventListener("submit", async (event) => {

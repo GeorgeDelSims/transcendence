@@ -37,7 +37,7 @@ services:
       - ./backend:/app
       - ./frontend/dist:/app/frontend/dist
       - ./database:/database
-      - /app/node_modules
+      - backend-node-modules:/app/node_modules
     profiles:
       - dev
 
@@ -60,3 +60,4 @@ services:
 volumes:
   frontend-dist:
   db-data:
+  backend-node-modules:

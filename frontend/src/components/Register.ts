@@ -1,6 +1,6 @@
 export function RegisterComponent(root: HTMLElement) {
     root.innerHTML = `
-        <h2>Register</h2>
+        <h2>Register here </h2>
         <form id="register-form">
             <input id="username" placeholder="Username" required />
             <input id="password" type="password" placeholder="Password" required />
@@ -44,3 +44,14 @@ export function RegisterComponent(root: HTMLElement) {
     });
 }
   
+
+/*
+
+WARNING 
+
+
+inner.HTML on an input field is a security breach (allows injections)
+
+text.content is safer 
+
+*/

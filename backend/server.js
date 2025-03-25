@@ -5,13 +5,18 @@ import jwt from '@fastify/jwt';
 import databasePlugin from './database.js';
 import fastifyBcrypt from 'fastify-bcrypt';
 
+//import websockets:
+import fastifyWebsocket from '@fastify/websocket';
+
 const fastify = Fastify({ logger: true });
 
+// Register plugins: 
 fastify.register(cookie);
 fastify.register(jwt, { secret: 'supersecret' });
 
 await fastify.register(databasePlugin);
 await fastify.register(fastifyBcrypt);
+await fastify.register(fastifyWebsocket);
 
 // import shared utils, services, and repositories to the Fastify instance
 import BcryptPasswordHasher from './src/shared/utils/hash.js';
