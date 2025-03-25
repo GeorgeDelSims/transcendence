@@ -9,6 +9,6 @@ RUN npm install
 COPY . .
 
 # create /app/dist (compiled code) inside frontend container image
-RUN npm run clean && npm run build
+RUN npm run build
 
 CMD ["echo", "Build complete."]

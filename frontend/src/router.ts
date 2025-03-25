@@ -7,8 +7,8 @@ import { HomeComponent } from "./components/Home.js";
 // Keys = strings // values = functions that take HTMLElement and return void (i.e. Components)
 const routes: Record<string, (root: HTMLElement) => void> = {
   "/": HomeComponent,
-  "/login": LoginComponent,
-  "/register": RegisterComponent,
+  "/auth/login": LoginComponent,
+  "/auth/register": RegisterComponent,
 };
 
 // Initialise the router (optional parameter rootId has a default value of "app")
