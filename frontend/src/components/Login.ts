@@ -24,7 +24,7 @@ export function LoginComponent(root: HTMLElement) {
 
     // Fetch request to the backend API: 
     try {
-        const response = await fetch("http://127.0.0.1:3000/login", {
+        const response = await fetch("/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password })

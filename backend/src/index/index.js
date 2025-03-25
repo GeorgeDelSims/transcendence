@@ -2,7 +2,7 @@ import path from 'path';
 // plugin for serving static files
 // Since we're building a SPA we only need to use this once 
 import fastifyStatic from '@fastify/static'; 
-import authRoutes from '../auth/infrastructure/AuthRoutes.js';
+import authRoutes from '../auth/infrastructure/authRoutes.js';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
