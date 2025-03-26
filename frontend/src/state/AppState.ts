@@ -1,13 +1,13 @@
 
 // Application global state, has users (string username) and listeners (array of functions)
 type AppState = {
-    user: null | { username: string };
+    player: null | { username: string };
     listeners: (() => void)[];
 };
   
 // Create an instance of the state
 const state: AppState = {
-    user: null,
+    player: null,
     listeners: []
 };
   

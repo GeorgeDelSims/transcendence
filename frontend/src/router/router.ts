@@ -1,14 +1,12 @@
-import { LoginComponent } from "./components/Login.js";
-import { RegisterComponent } from "./components/Register.js";
-import { HomeComponent } from "./components/Home.js";
+import { RegisterPage } from "../pages/Register.js";
+import { HomePage } from "../pages/Home.js";
 
 
 // Route Map: (Record is the typescript equivalent of a Dictionary)
 // Keys = strings // values = functions that take HTMLElement and return void (i.e. Components)
 const routes: Record<string, (root: HTMLElement) => void> = {
-  "/": HomeComponent,
-  "/auth/login": LoginComponent,
-  "/auth/register": RegisterComponent,
+  "/": HomePage,
+  "/auth/register": RegisterPage,
 };
 
 // Initialise the router (optional parameter rootId has a default value of "app")

@@ -1,4 +1,4 @@
-import { initRouter } from "./router.js";
+import { initRouter } from "./router/router.js";
 import { subscribe } from "./state/AppState.js";
 window.addEventListener("DOMContentLoaded", () => {
     initRouter("app");

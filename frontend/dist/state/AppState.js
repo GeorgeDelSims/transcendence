@@ -1,6 +1,6 @@
 // Create an instance of the state
 const state = {
-    user: null,
+    player: null,
     listeners: []
 };
 // Update state object 
