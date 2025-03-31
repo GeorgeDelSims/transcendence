@@ -1,7 +1,8 @@
 import frontend from "../utils/frontend.js";
 import registerComponent from "../components/RegisterComponent.js";
-function page() {
-    return frontend.create(`
+
+function page(): HTMLElement {
+  return frontend.create(`
     <div class="min-h-full">
       <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -21,11 +22,15 @@ function page() {
     </div>
   `);
 }
-function RegisterPage() {
-    const root = page();
-    const form = registerComponent();
-    frontend.mountComponent(root, "content", form);
-    document.body.innerHTML = ""; // Clear existing page
-    document.body.appendChild(root);
+
+function RegisterPage(): void {
+  const root = page();
+  const form = registerComponent();
+
+  frontend.mountComponent(root, "content", form);
+
+  document.body.innerHTML = ""; // Clear existing page
+  document.body.appendChild(root);
 }
+
 export default RegisterPage;

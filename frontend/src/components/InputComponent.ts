@@ -1,4 +1,4 @@
-export function InputComponent(
+function InputComponent(
     id: string,
     placeholder: string,
     type: "text" | "password" = "text"
@@ -15,3 +15,4 @@ export function InputComponent(
     return inputElement;
   }
   
+  export default InputComponent

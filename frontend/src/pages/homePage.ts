@@ -1,13 +1,14 @@
-import { HyperlinkComponent } from "../components/HyperlinkComponent.js";
-import { getState } from "../state/AppState.js";
-import { createElementWithChildren } from "../utils/createElementWithChildren.js";
+import HyperlinkComponent from "../components/HyperlinkComponent.js";
+import appState from "../state/AppState.js";
+import frontend from "../utils/frontend.js";
+import HelloComponent from "../components/HelloComponent.js";
 
-export function HomePage(rootElement: HTMLElement): void {
+function HomePage(rootElement: HTMLElement): void {
     // Clear the existing page content
     rootElement.innerHTML = ""; 
 
-    // Get current state (player info)
-    const { player } = getState(); 
+    // Get current state (user info)
+    const { user } = appState.getState(); 
 
     // Create heading
     const heading = document.createElement("h2");
@@ -17,8 +18,8 @@ export function HomePage(rootElement: HTMLElement): void {
     const paragraph = document.createElement("p");
     paragraph.className = "text-white";
 
-    if (player) {
-        heading.textContent = `Welcome, ${player.username}`;
+    if (user) {
+        heading.textContent = `Welcome, ${user.username}`;
         paragraph.textContent = "This is the home page.";
     } else {
         heading.textContent = "Welcome";
@@ -26,15 +27,24 @@ export function HomePage(rootElement: HTMLElement): void {
     // Create link 
     paragraph.textContent = "Please ";
     const registerLink = HyperlinkComponent("Register", "#/auth/register");
+    // const registerLink = `<a href="#/auth/register">Register</a>`;
+
     paragraph.appendChild(registerLink);
     paragraph.appendChild(document.createTextNode("."));
   }
 
+  const helloMessage = HelloComponent();
+  const pongLink = HyperlinkComponent("Go to Pong Game", "#/ws/pong");
+
   // wrap the content in a styled container
-  const pageContainer = createElementWithChildren("div", "p-8", [
+  const pageContainer = frontend.createElementWithChildren("div", "p-8", [
     heading,
     paragraph,
+    helloMessage,
+    pongLink,
   ]);
 
   rootElement.appendChild(pageContainer);
 }
+
+export default HomePage;

@@ -1,9 +1,13 @@
-import { createElementWithChildren } from "../utils/createElementWithChildren.js";
+// Simple Stateless Component:
+// A component that does not manage its own state — it relies entirely on props (inputs) or external state.
 
-export function FormComponent(
+import frontend from "../utils/frontend.js";
+
+function FormComponent(
     id: string,
     children: HTMLElement[]
   ): HTMLFormElement {
-    return createElementWithChildren("form", "flex flex-col gap-4 max-w-sm", children) as HTMLFormElement;
+    return frontend.createElementWithChildren("form", "flex flex-col gap-4 max-w-sm", children) as HTMLFormElement;
   }
   
+  export default FormComponent;

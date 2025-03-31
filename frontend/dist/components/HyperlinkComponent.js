@@ -1,4 +1,4 @@
-export function HyperlinkComponent(labelText, linkString, onClickHandler, type = "hyperlink") {
+function HyperlinkComponent(labelText, linkString, onClickHandler, type = "hyperlink") {
     const hyperlink = document.createElement("a");
     hyperlink.href = linkString;
     hyperlink.textContent = labelText;
@@ -8,3 +8,4 @@ export function HyperlinkComponent(labelText, linkString, onClickHandler, type =
     }
     return hyperlink;
 }
+export default HyperlinkComponent;

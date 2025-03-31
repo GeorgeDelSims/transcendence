@@ -1,4 +1,4 @@
-export function ButtonComponent(
+function ButtonComponent(
     labelText: string,
     onClickHandler?: (event: MouseEvent) => void,
     type: "button" | "submit" = "button"
@@ -16,3 +16,4 @@ export function ButtonComponent(
     return buttonElement;
   }
   
+export default ButtonComponent;

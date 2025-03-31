@@ -1,13 +1,15 @@
-import { RegisterPage } from "../pages/Register.js";
-import { HomePage } from "../pages/Home.js";
+import RegisterPage from "../pages/registerPage.js";
+import HomePage from "../pages/homePage.js";
+import PongPage from "../pages/pongPage.js";
 // Route Map: (Record is the typescript equivalent of a Dictionary)
 // Keys = strings // values = functions that take HTMLElement and return void (i.e. Components)
 const routes = {
     "/": HomePage,
     "/auth/register": RegisterPage,
+    "/ws/pong": PongPage,
 };
 // Initialise the router (optional parameter rootId has a default value of "app")
-export function initRouter(rootId = "app") {
+function initRouter(rootId = "app") {
     // get the root DOM element
     const root = document.getElementById(rootId);
     if (!root) {
@@ -34,3 +36,4 @@ export function initRouter(rootId = "app") {
 window.addEventListener("popstate", (event) => {
     event.preventDefault();
 });
+export default initRouter;

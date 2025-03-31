@@ -3,6 +3,7 @@ import path from 'path';
 // Since we're building a SPA we only need to use this once 
 import fastifyStatic from '@fastify/static'; 
 import authRoutes from '../auth/infrastructure/authRoutes.js';
+import pongRoutes from '../pong/infrastructure/pongRoutes.js';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
@@ -20,8 +21,10 @@ export default async function registerRoutes(fastify) {
   
   // fastify.log.info("frontendDistPath : ", frontendDistPath);
   console.log("frontendDistPath : ", frontendDistPath);
+  
   // Register API routes
-  fastify.register(authRoutes, { prefix: '/' });
+  fastify.register(authRoutes);
+  fastify.register(pongRoutes);
 
   // Catch-all fallback: serve index.html for any GET request not handled
   fastify.setNotFoundHandler({ preHandler: fastify.staticServe }, async (request, response) => {

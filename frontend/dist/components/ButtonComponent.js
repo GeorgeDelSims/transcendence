@@ -1,4 +1,4 @@
-export function ButtonComponent(labelText, onClickHandler, type = "button") {
+function ButtonComponent(labelText, onClickHandler, type = "button") {
     const buttonElement = document.createElement("button");
     buttonElement.textContent = labelText;
     buttonElement.type = type;
@@ -9,3 +9,4 @@ export function ButtonComponent(labelText, onClickHandler, type = "button") {
     }
     return buttonElement;
 }
+export default ButtonComponent;

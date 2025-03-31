@@ -1,4 +1,4 @@
-export function HyperlinkComponent(
+function HyperlinkComponent(
     labelText: string,
     linkString: string,
     onClickHandler?: (event: MouseEvent) => void,
@@ -15,3 +15,5 @@ export function HyperlinkComponent(
     
     return hyperlink;
 }
+
+export default HyperlinkComponent;

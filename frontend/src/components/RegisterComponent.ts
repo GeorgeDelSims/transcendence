@@ -1,15 +1,7 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 import frontend from "../utils/frontend.js";
-function registerComponent() {
-    const container = frontend.create(`
+
+function registerComponent(): HTMLFormElement {
+  const container = frontend.create(`
     <form class="flex flex-col space-y-4" data-component="register">
       <h2 class="text-xl font-bold mb-2 text-white">Register</h2>
       <input 
@@ -31,36 +23,46 @@ function registerComponent() {
         Register
       </button>
     </form>
-  `);
-    container.addEventListener("submit", (event) => __awaiter(this, void 0, void 0, function* () {
-        event.preventDefault();
-        const formData = new FormData(container);
-        const username = formData.get("username").trim();
-        const password = formData.get("password");
-        if (!username || !password) {
-            alert("Please fill all fields");
-            return;
-        }
-        try {
-            const response = yield fetch("/auth/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password }),
-            });
-            const data = yield response.json();
-            if (!response.ok) {
-                throw new Error(data.error || "Registration failed");
-            }
-            alert("Registration successful! You can now login.");
-            window.location.hash = "#/auth/login";
-        }
-        catch (error) {
-            alert(error.message);
-        }
-    }));
-    return container;
+  `) as HTMLFormElement;
+
+  container.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(container);
+    const username = (formData.get("username") as string).trim();
+    const password = formData.get("password") as string;
+
+    if (!username || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    try {
+      const response = await fetch("/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Registration failed");
+      }
+
+      alert("Registration successful! You can now login.");
+      window.location.hash = "#/auth/login";
+    } catch (error) {
+      alert((error as Error).message);
+    }
+  });
+
+  return container;
 }
+
 export default registerComponent;
+
+
 /*
 function RegisterPage(rootElement: HTMLElement): void {
   rootElement.innerHTML = "";
@@ -115,4 +117,4 @@ function RegisterPage(rootElement: HTMLElement): void {
 }
 
 export default RegisterPage;
-*/ 
+*/

@@ -1,9 +1,10 @@
-import { createElementWithChildren } from "../utils/createElementWithChildren.js";
+import frontend from "../utils/frontend.js";
 
-export function PageSectionComponent(
+function PageSectionComponent(
     className: string,
     children: HTMLElement[]
   ): HTMLDivElement {
-    return createElementWithChildren("div", className, children) as HTMLDivElement;
+    return frontend.createElementWithChildren("div", className, children) as HTMLDivElement;
   }
   
+  export default PageSectionComponent;
