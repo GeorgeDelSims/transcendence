@@ -20,6 +20,7 @@ function create(html: string) {
   return first.cloneNode(true) as HTMLElement;
 }
 
+
 // This function embeds one or more elements into a "parent" element 
 function createElementWithChildren(
   tagName: string,

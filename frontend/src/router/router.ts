@@ -1,14 +1,14 @@
-import RegisterPage from "../pages/registerPage.js";
-import HomePage from "../pages/homePage.js";
-import PongPage from "../pages/pongPage.js";
+import RegisterPage from "../views/registerView.js";
+import HomeView from "../views/homeView.js";
+import PongView from "../views/pongView.js";
 
 
 // Route Map: (Record is the typescript equivalent of a Dictionary)
 // Keys = strings // values = functions that take HTMLElement and return void (i.e. Components)
 const routes: Record<string, (root: HTMLElement) => void> = {
-  "/": HomePage,
+  "/": HomeView,
   "/auth/register": RegisterPage,
-  "/ws/pong": PongPage,
+  "/ws/pong-ws": PongView,
 };
 
 // Initialise the router (optional parameter rootId has a default value of "app")

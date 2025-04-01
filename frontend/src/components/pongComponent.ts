@@ -1,25 +1,27 @@
-import ButtonComponent from "../components/ButtonComponent.js";
-import InputComponent from "../components/InputComponent.js";
+import frontend from "../utils/frontend.js";
 
-function pongComponent(): HTMLElement {
-  const socket = new WebSocket("ws://127.0.0.1:3000/ws/pong");
+function pongComponent() {
+  
+  const container = frontend.create(`
+    <section data-component="pong" class="space-y-4 text-white">
+    <h2 class="text-xl font-bold">Pong</h2>
+    <input id="pong-input" placeholder="Type a message here" class="w-full p-2 rounded bg-gray-800 border border-gray-600" />
+      <button id="pong-send" class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-500 transition">Send</button>
+      <div id="pong-log" class="mt-4 space-y-1"></div>
+      </section>
+  `);
+      
+  const input = container.querySelector("#pong-input") as HTMLInputElement;
+  const sendButton = container.querySelector("#pong-send") as HTMLElement;
+  const log = container.querySelector("#pong-log") as HTMLElement;
+  
+  const webSocket = new WebSocket("ws://localhost:3000/ws/pong-ws");
+  // webSocket.onerror()
 
-  const container = document.createElement("section");
-  container.className = "space-y-4 text-white";
-
-  const heading = document.createElement("h2");
-  heading.textContent = "Pong";
-  heading.className = "text-xl font-bold";
-
-  const input = InputComponent("pong-input", "Type a message here");
-
-  const log = document.createElement("div");
-  log.className = "mt-4 space-y-1";
-
-  const sendButton = ButtonComponent("Send", () => {
+  sendButton.addEventListener("click", () => {
     const text = input.value.trim();
     if (text) {
-      socket.send(text);
+      webSocket.send(text);
       input.value = "";
     }
   });
@@ -30,26 +32,27 @@ function pongComponent(): HTMLElement {
     log.appendChild(entry);
   }
 
-  socket.addEventListener("open", () => {
+  // Event listeners : 
+
+  webSocket.addEventListener("open", () => {
     logMessage("WebSocket connected");
+    webSocket.send("test message from frontend");
   });
 
-  socket.addEventListener("message", (event) => {
-    logMessage(`From server: ${event.data}`);
+  webSocket.addEventListener("message", (event) => logMessage(`From server: ${event.data}`));
+  
+  webSocket.addEventListener("close", (event) => {
+    logMessage(`WebSocket closed (code: ${event.code}, reason: ${event.reason})`);
   });
 
-  socket.addEventListener("close", () => {
-    logMessage("WebSocket closed");
-  });
-
-  socket.addEventListener("error", (error) => {
+  webSocket.addEventListener("error", (error) => {
     logMessage("WebSocket error");
     console.error(error);
   });
-
-  container.append(heading, input, sendButton, log);
 
   return container;
 }
 
 export default pongComponent;
+
+

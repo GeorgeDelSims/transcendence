@@ -1,9 +1,7 @@
 
 // Application global state, has users (string username) and listeners (array of functions)
 type AppState = {
-    page: {
-        title: string;
-    }
+    page: {title: string;}
     user: null | { username: string };
     helloMessage: string;
     listeners: (() => void)[];

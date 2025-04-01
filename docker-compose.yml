@@ -6,7 +6,7 @@ services:
     working_dir: /app
     command: >
       sh -c "npm install &&
-             npm run watch:ts & 
+             npm run watch:ts && 
              npm run watch:css"
     volumes:
       - ./frontend:/app

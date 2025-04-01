@@ -1,9 +1,7 @@
 import path from 'path';
-// plugin for serving static files
-// Since we're building a SPA we only need to use this once 
-import fastifyStatic from '@fastify/static'; 
-import authRoutes from '../auth/infrastructure/authRoutes.js';
 import pongRoutes from '../pong/infrastructure/pongRoutes.js';
+import authRoutes from '../auth/infrastructure/authRoutes.js';
+import fastifyStatic from '@fastify/static'; 
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
@@ -13,21 +11,22 @@ const frontendDistPath = path.resolve(__dirname, '../../../app/frontend/dist');
 
 
 export default async function registerRoutes(fastify) {
+  // Register API routes
+  await fastify.register(pongRoutes);
+  fastify.register(authRoutes);
+  
   // Serve static file from frontend build dir
   fastify.register(fastifyStatic, {
     root: frontendDistPath,
     prefix: '/',
+    wildcard: false
   });
   
   // fastify.log.info("frontendDistPath : ", frontendDistPath);
   console.log("frontendDistPath : ", frontendDistPath);
-  
-  // Register API routes
-  fastify.register(authRoutes);
-  fastify.register(pongRoutes);
 
   // Catch-all fallback: serve index.html for any GET request not handled
-  fastify.setNotFoundHandler({ preHandler: fastify.staticServe }, async (request, response) => {
+  fastify.setNotFoundHandler(async (request, response) => {
     
     if (request.raw.method === 'GET' && request.headers.accept?.includes('text/html')) {
       const indexFilePath = path.join(frontendDistPath, 'index.html');
