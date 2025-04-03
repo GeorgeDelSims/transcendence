@@ -13,6 +13,8 @@ services:
       - ./frontend/dist:/app/dist
     profiles:
       - dev
+    networks:
+      - pongnet
 
   # FRONTEND - PROD
   frontend-prod:
@@ -40,6 +42,8 @@ services:
       - backend-node-modules:/app/node_modules
     profiles:
       - dev
+    networks:
+      - pongnet
 
   # BACKEND - PROD
   backend-prod:
@@ -57,7 +61,11 @@ services:
     profiles:
       - prod
 
+
 volumes:
   frontend-dist:
   db-data:
   backend-node-modules:
+
+networks:
+  pongnet:

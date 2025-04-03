@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
+// import socketIo from 'fastify-socket.io'
 import registerRoutes from './src/index/index.js';
 import jwt from '@fastify/jwt';
 import databasePlugin from './database.js';
@@ -10,6 +11,7 @@ const fastify = Fastify({ logger: true });
 
 // Register plugins: 
 fastify.register(fastifyWebsocket);
+// fastify.register(socketIo);
 fastify.register(jwt, { secret: 'supersecret' });
 
 await fastify.register(databasePlugin);

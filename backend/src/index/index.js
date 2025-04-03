@@ -1,5 +1,5 @@
 import path from 'path';
-import pongRoutes from '../pong/infrastructure/pongRoutes.js';
+import wsRoute from '../pong/infrastructure/wsRoute.js';
 import authRoutes from '../auth/infrastructure/authRoutes.js';
 import fastifyStatic from '@fastify/static'; 
 import fs from 'fs';
@@ -12,14 +12,14 @@ const frontendDistPath = path.resolve(__dirname, '../../../app/frontend/dist');
 
 export default async function registerRoutes(fastify) {
   // Register API routes
-  await fastify.register(pongRoutes);
+  await fastify.register(wsRoute);
   fastify.register(authRoutes);
   
   // Serve static file from frontend build dir
   fastify.register(fastifyStatic, {
     root: frontendDistPath,
-    prefix: '/',
-    wildcard: false
+    prefix: '/'
+    // wildcard: false -> can prevent server from serving static files
   });
   
   // fastify.log.info("frontendDistPath : ", frontendDistPath);

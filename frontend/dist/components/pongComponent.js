@@ -11,8 +11,11 @@ function pongComponent() {
     const input = container.querySelector("#pong-input");
     const sendButton = container.querySelector("#pong-send");
     const log = container.querySelector("#pong-log");
-    const webSocket = new WebSocket("ws://localhost:3000/ws/pong-ws");
-    // webSocket.onerror()
+    // sets the WebSocket protocol 
+    // based on whether the current webpage was loaded via HTTP or HTTPS
+    // wss is used when using HTTPS protocol, ws when using HTTP
+    const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const webSocket = new WebSocket(`${wsProtocol}://${window.location.host}/ws/pong-ws`);
     sendButton.addEventListener("click", () => {
         const text = input.value.trim();
         if (text) {
