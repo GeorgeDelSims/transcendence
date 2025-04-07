@@ -9,7 +9,7 @@ function HomeView() {
         </p>
       <div id=hello-component></div>
       <div>
-        <a href="#/ws/pong-ws" class="text-blue-400 underline">Go to Pong Game</a>
+        <a href="#/ws/pong-ws" class="text-blue-400 underline">Go to chat</a>
       </div>
     </div>
   `);

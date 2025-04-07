@@ -1,7 +1,6 @@
 import frontend from "../utils/frontend.js";
 import HelloComponent from "../components/helloComponent.js";
 
-
 function HomeView(): void {
   const homeView = frontend.create(`
     <div class="p-8 space-y-4 text-black">
@@ -11,7 +10,7 @@ function HomeView(): void {
         </p>
       <div id=hello-component></div>
       <div>
-        <a href="#/ws/pong-ws" class="text-blue-400 underline">Go to Pong Game</a>
+        <a href="#/ws/pong-ws" class="text-blue-400 underline">Go to chat</a>
       </div>
     </div>
   `)

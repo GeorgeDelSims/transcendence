@@ -1,5 +1,6 @@
+/*
 import path from 'path';
-import wsRoute from '../pong/infrastructure/wsRoute.js';
+import wsRoute from '../shared/websocket/wsRoute.js';
 import authRoutes from '../auth/infrastructure/authRoutes.js';
 import fastifyStatic from '@fastify/static'; 
 import fs from 'fs';
@@ -36,3 +37,5 @@ export default async function registerRoutes(fastify) {
     }
   });
 }
+
+*/
