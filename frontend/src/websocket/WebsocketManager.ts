@@ -11,6 +11,7 @@ class WebsocketManager {
         const protocol = window.location.protocol === "https:" ? "wss" : "ws";
         this.socket = new WebSocket(`${protocol}://${window.location.host}${url}`);
     
+        
         // Event Listener for opening the websocket
         this.socket.addEventListener("open", () => {
             this.connected = true;
@@ -37,6 +38,7 @@ class WebsocketManager {
         this.socket.addEventListener("close", (event) => {
             this.connected = false;
             console.log(`Websocket disconnected: ${event.reason || "no clear reason"}`);
+            console.log("Socket closed:", event.code, event.reason);
             eventManager.dispatchEvent(new Event("ws:close"));
         });
 
@@ -51,7 +53,7 @@ class WebsocketManager {
     // SEnd method in order to send JSON data over the socket when connected:
     send(message: WsMessage) {
         if (this.connected) {
-            this.socket.send(message.toJSON());
+            this.socket.send(JSON.stringify(message));
         } else {
             console.warn("Websocket not connected, can't send.");
         }

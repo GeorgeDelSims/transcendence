@@ -1,3 +1,4 @@
+/*
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
 import fastifyStatic from '@fastify/static';
@@ -47,8 +48,8 @@ fastify.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
   console.log(`Backend running at ${address}`);
 });
 
+*/
 
-/*
 import Fastify from 'fastify';
 import fastifyWebsocket from '@fastify/websocket';
 import registerRoutes from './src/index/index.js';
@@ -88,7 +89,6 @@ try {
   console.error('Error in registerRoutes:', error);
   process.exit(1);
 }
-
 // Listen on port
 fastify.listen({ port: 3000, host: '0.0.0.0' }, function (error, address) {
   if (error) {
@@ -98,4 +98,3 @@ fastify.listen({ port: 3000, host: '0.0.0.0' }, function (error, address) {
   console.log(`server running at ${address}`)
 })
 
-*/

@@ -1,4 +1,3 @@
-/*
 import path from 'path';
 import wsRoute from '../shared/websocket/wsRoute.js';
 import authRoutes from '../auth/infrastructure/authRoutes.js';
@@ -21,11 +20,11 @@ export default async function registerRoutes(fastify) {
     root: frontendDistPath,
     prefix: '/'
     // wildcard: false -> can prevent server from serving static files
-  });
-  
-  // fastify.log.info("frontendDistPath : ", frontendDistPath);
+    });
+    
+    // fastify.log.info("frontendDistPath : ", frontendDistPath);
   console.log("frontendDistPath : ", frontendDistPath);
-
+  
   // Catch-all fallback: serve index.html for any GET request not handled
   fastify.setNotFoundHandler(async (request, response) => {
     
@@ -34,8 +33,11 @@ export default async function registerRoutes(fastify) {
       return response.type('text/html').send(fs.readFileSync(indexFilePath, 'utf-8'));
     } else {
       response.code(404).send({ error: 'Not Found' });
-    }
+      }
   });
-}
+  }
+  
+
+  /*
 
 */

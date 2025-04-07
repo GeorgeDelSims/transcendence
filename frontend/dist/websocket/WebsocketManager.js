@@ -31,6 +31,7 @@ class WebsocketManager {
         this.socket.addEventListener("close", (event) => {
             this.connected = false;
             console.log(`Websocket disconnected: ${event.reason || "no clear reason"}`);
+            console.log("Socket closed:", event.code, event.reason);
             eventManager.dispatchEvent(new Event("ws:close"));
         });
         // Event Listener for errors
@@ -42,7 +43,7 @@ class WebsocketManager {
     // SEnd method in order to send JSON data over the socket when connected:
     send(message) {
         if (this.connected) {
-            this.socket.send(message.toJSON());
+            this.socket.send(JSON.stringify(message));
         }
         else {
             console.warn("Websocket not connected, can't send.");

@@ -1,9 +1,5 @@
 export abstract class WsMessage {
     abstract type: string;
-
-    toJSON(): string {
-        return JSON.stringify(this);
-    }
 }
 
 export class ChatMessage extends WsMessage {

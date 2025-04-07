@@ -1,7 +1,4 @@
 export class WsMessage {
-    toJSON() {
-        return JSON.stringify(this);
-    }
 }
 export class ChatMessage extends WsMessage {
     constructor(text) {

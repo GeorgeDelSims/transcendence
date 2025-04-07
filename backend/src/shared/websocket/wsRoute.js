@@ -22,12 +22,12 @@ function handleMessage(socket, message) {
       message: "Invalid JSON received"
     }));
   }
-
 }
 
 // opens the socket 
 function handleSocket(socket, req) {
   console.log('new websocket connection:', socket);
+  socket.send(JSON.stringify({ type: 'connected', timestamp: Date.now() }));
 
   // handle connection
   socket.on('message', (message) => {
