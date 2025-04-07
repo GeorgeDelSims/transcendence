@@ -42,9 +42,6 @@ function handleSocket(socket, req) {
 
 // export the route that works with the socket 
 export default async function wsRoute(fastify) {
-  // plugin only needs to be registered within the scope of the ws route
-  // await fastify.register(fastifyWebsocket);
-  
   fastify.get('/ws/main-ws', { websocket: true }, handleSocket)
   console.log("Websocket route mounted at /ws/main-ws");
 }

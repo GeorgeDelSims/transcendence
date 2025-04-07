@@ -1,6 +1,6 @@
 import RegisterPage from "../views/registerView.js";
 import HomeView from "../views/homeView.js";
-import PongView from "../views/pongView.js";
+import PongView from "../views/chatView.js";
 // Route Map: (Record is the typescript equivalent of a Dictionary)
 // Keys = strings // values = functions that take HTMLElement and return void (i.e. Components)
 const routes = {
