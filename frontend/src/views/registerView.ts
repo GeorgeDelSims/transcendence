@@ -1,6 +1,7 @@
 import frontend from "../utils/frontend.js";
 import registerComponent from "../components/registerComponent.js";
 
+
 function RegisterView(): void {
   const registerView = frontend.create(`
     <div class="min-h-full">

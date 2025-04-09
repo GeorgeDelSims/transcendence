@@ -1,3 +1,11 @@
-backend/node_modules
+# Node modules
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment files
 .env
 .secrets/
+
+# Build files
+frontend/dist/

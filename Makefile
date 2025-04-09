@@ -25,14 +25,14 @@ dev-re: dev-down
 
 #prod:
 
-prod-up: 
-	docker compose --profile prod up --build
+# prod-up: 
+# 	docker compose --profile prod up --build
 
-prod-down: 
-	docker compose down
+# prod-down: 
+# 	docker compose down
 
-prod-re: prod-down 
-	docker compose --profile prod up --build
+# prod-re: prod-down 
+# 	docker compose --profile prod up --build
 
 #utils:
 
@@ -41,6 +41,9 @@ logs:
 
 clean-all:
 	docker compose down -v --remove-orphans
+
+clean-frontend:
+	cd frontend && npm run clean
 
 
 .PHONY: dev-up-no-cache, dev-up, dev-down, dev-re
